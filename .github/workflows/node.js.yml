@@ -63,4 +63,5 @@ jobs:
       run: |
         TEMP=$(mktemp)
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > $TEMP
+        echo "$TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }}"
         ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'bash -s' < ./scripts/deploy.sh 123456
