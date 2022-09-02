@@ -60,4 +60,5 @@ jobs:
 #        push: true
 #        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.versioning.outputs.version }}
     - name: Deploy
-      run: ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'bash -s' < ./scripts/deploy.sh 123456
+      run: ls -l
+#      run: ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'bash -s' < ./scripts/deploy.sh 123456
