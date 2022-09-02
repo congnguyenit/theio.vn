@@ -30,7 +30,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Increment Semantic Version
-      id: git_semantic_version
+      id: versioning
       uses: PaulHatch/semantic-version@v5.0.0-alpha2
       with:
         # Set to specify a specific branch, default is the current HEAD
@@ -54,4 +54,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.get_version.outputs.version }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.versioning.outputs.version }}
