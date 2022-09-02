@@ -27,14 +27,31 @@ jobs:
        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
     - name: checkout code
       uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        fetch-depth: 0
+    - name: Increment Semantic Version
+      id: git_semantic_version
+      uses: PaulHatch/semantic-version@v5.0.0-alpha2
+      with:
+        # Set to specify a specific branch, default is the current HEAD
+        branch: HEAD
+        # The prefix to use to identify tags
+        tag_prefix: "v"
+        # A string which, if present in a git commit, indicates that a change represents a major (breaking) change. Wrap with '/' to match using a regular expression.
+        major_pattern: "(MAJOR)"
+        # A string which, if present in a git commit, indicates that a change represents a minor (feature) change. Wrap with '/' to match using a regular expression.
+        minor_pattern: "(MINOR)"
+        # Pattern to use when formatting output version
+        version_format: "${major}.${minor}.${patch}"
+        # If true, every commit will be treated as a bump to the version.
+        bump_each_commit: false
+        # If true, the body of commits will also be searched for major/minor patterns to determine the version type.
+        search_commit_body: true
+        # The output method used to generate list of users, 'csv' or 'json'. Default is 'csv'.
+        user_format_type: json
     - name: Build and push Docker image
       id: docker_build
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:latest
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.get_version.outputs.version }}
