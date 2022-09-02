@@ -49,10 +49,6 @@ jobs:
         #          namespace: my-service
         # If this is set to true, *every* commit will be treated as a new version.
         bump_each_commit: true
-        # If true, the body of commits will also be searched for major/minor patterns to determine the version type.
-        search_commit_body: false
-        # The output method used to generate list of users, 'csv' or 'json'.
-        user_format_type: "csv"
     - name: Build and push Docker image
       id: docker_build
       uses: docker/build-push-action@v2
@@ -64,4 +60,12 @@ jobs:
         TEMP=$(mktemp)
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > $TEMP
         chmod 600 $TEMP
-        ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'bash -s' < ./scripts/deploy.sh ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.versioning.outputs.version }}
+#        ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'bash -s' < ./scripts/deploy.sh ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.versioning.outputs.version }}
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: whoami
