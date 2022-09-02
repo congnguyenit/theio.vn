@@ -1,1 +1,1 @@
-echo 'test deploy successfully'
+echo "test deploy successfully $1"
