@@ -60,7 +60,8 @@ jobs:
         TEMP=$(mktemp)
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > $TEMP
         chmod 600 $TEMP
-        ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'bash -s' < ./scripts/deploy.sh ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.versioning.outputs.version }}
+        ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'testtttttttttttttttt'
+#        ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.SSH_PORT }} 'bash -s' < ./scripts/deploy.sh ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.versioning.outputs.version }}
 #    - name: executing remote ssh commands using ssh key
 #      uses: appleboy/ssh-action@master
 #      with:
