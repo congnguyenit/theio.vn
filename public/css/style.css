@@ -399,6 +399,17 @@ header .intro-text {
 .hover-bg:hover .hover-text {
   opacity: 1;
 }
+
+#quote {
+  padding: 100px 0;
+  background: #f6f6f6;
+}
+#quote i {
+  color: #e6e6e6;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
 /* Testimonials Section */
 #testimonials {
   padding: 100px 0;
